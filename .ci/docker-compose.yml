@@ -1,0 +1,37 @@
+services:
+
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    environment:
+      POSTGRES_DB: subscriptions
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    networks:
+      - dns
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  subscription-server:
+    build:
+      context: ..
+      dockerfile: .ci/Dockerfile
+    container_name: subscription-server
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/subscriptions
+    networks:
+      - dns
+
+volumes:
+  pgdata:
+
+networks:
+  dns:
