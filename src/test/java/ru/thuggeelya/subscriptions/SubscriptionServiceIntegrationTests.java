@@ -24,7 +24,7 @@ import static ru.thuggeelya.subscriptions.entity.SubscriptionStatus.INACTIVE;
 
 @SpringBootTest
 @Import(PostgresTestContainerConfig.class)
-class SubscriptionServiceIntegrationTests extends PostgresTestContainerConfig {
+class SubscriptionServiceIntegrationTests {
 
     @Autowired
     private SubscriptionServiceImpl subscriptionService;
